@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简约化时钟（带农历信息）</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column; /* 垂直排列 */
+        }
+
+        #date {
+            font-size: 3em; /* 字体大小加倍 */
+            margin-bottom: 10px; /* 日期与时间的间距 */
+        }
+
+        #time {
+            font-size: 8em; /* 字体大小加倍 */
+            font-weight: bold; /* 时间字体加粗 */
+            letter-spacing: 2px; /* 字母间距 */
+            margin-bottom: 10px; /* 时间与农历的间距 */
+        }
+
+        #lunar {
+            font-size: 3em; /* 农历字体大小 */
+        }
+    </style>
+</head>
+<body>
+    <div id="datetime">
+        <div id="date"></div>
+        <div id="time"></div>
+        <div id="lunar">加载中...</div>
+    </div>
+
+    <script>
+        // 进入全屏模式
+        function enterFullScreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        }
+
+        // 获取农历信息
+        async function getLunarDate() {
+            const now = new Date();
+            const dateStr = now.toISOString().split('T')[0]; // 格式化为 YYYY-MM-DD
+
+            try {
+                const response = await fetch(`https://v2.alapi.cn/api/lunar?token=u7dem09nzvcyi2pbz4m8gvyhlb54fr&date=${dateStr}`);
+                const data = await response.json();
+                if (data.code === 200) {
+                    // 格式化农历信息
+                    const lunarMonth = data.data.lunar_month;
+                    const lunarDay = data.data.lunar_day;
+
+                    // 处理农历日期格式
+                    const formattedLunar = formatLunarDate(lunarMonth, lunarDay);
+                    return formattedLunar;
+                } else {
+                    return "农历信息加载失败";
+                }
+            } catch (error) {
+                console.error("获取农历信息失败：", error);
+                return "农历信息加载失败";
+            }
+        }
+
+        // 格式化农历日期
+        function formatLunarDate(month, day) {
+            const monthStr = formatLunarMonth(month);
+            const dayStr = formatLunarDay(day);
+            return `${monthStr} ${dayStr}`;
+        }
+
+        // 格式化农历月份（正月、二月……腊月）
+        function formatLunarMonth(month) {
+            const monthNames = [
+                "正月", "二月", "三月", "四月", "五月", "六月",
+                "七月", "八月", "九月", "十月", "冬月", "腊月"
+            ];
+            return monthNames[month - 1];
+        }
+
+        // 格式化农历日（初几、几月十几）
+        function formatLunarDay(day) {
+            if (day === 1) return "初一";
+            if (day === 2) return "初二";
+            if (day === 3) return "初三";
+            if (day === 4) return "初四";
+            if (day === 5) return "初五";
+            if (day === 6) return "初六";
+            if (day === 7) return "初七";
+            if (day === 8) return "初八";
+            if (day === 9) return "初九";
+            if (day === 10) return "初十";
+            if (day === 11) return "十一";
+            if (day === 12) return "十二";
+            if (day === 13) return "十三";
+            if (day === 14) return "十四";
+            if (day === 15) return "十五";
+            if (day === 16) return "十六";
+            if (day === 17) return "十七";
+            if (day === 18) return "十八";
+            if (day === 19) return "十九";
+            if (day === 20) return "二十";
+            if (day === 21) return "廿一";
+            if (day === 22) return "廿二";
+            if (day === 23) return "廿三";
+            if (day === 24) return "廿四";
+            if (day === 25) return "廿五";
+            if (day === 26) return "廿六";
+            if (day === 27) return "廿七";
+            if (day === 28) return "廿八";
+            if (day === 29) return "廿九";
+            if (day === 30) return "三十";
+            return `${day}`;
+        }
+
+        // 更新日期和时间
+        function updateTime() {
+            const now = new Date();
+            const dateElement = document.getElementById('date');
+            const timeElement = document.getElementById('time');
+
+            // 格式化日期
+            dateElement.textContent = now.toLocaleDateString();
+
+            // 格式化时间（仅显示小时和分钟）
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            timeElement.textContent = `${hours}:${minutes}`;
+        }
+
+        // 页面加载完成后执行
+        window.onload = async () => {
+            enterFullScreen(); // 进入全屏模式
+
+            // 获取并显示农历信息（仅在页面加载时执行一次）
+            const lunarInfo = await getLunarDate();
+            document.getElementById('lunar').textContent = lunarInfo;
+
+            // 初始化时间显示
+            updateTime();
+            setInterval(updateTime, 1000); // 每秒更新时间
+        };
+    </script>
+</body>
+</html>
