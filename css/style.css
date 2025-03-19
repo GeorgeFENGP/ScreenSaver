@@ -1,0 +1,109 @@
+*
+{
+	margin: 0;
+	padding: 0;
+}
+/*body*/
+/*{*/
+/*	display: flex;*/
+/*	text-align:center;*/
+/*	justify-content: center;*/
+/*	align-items: center;*/
+/*	!*min-height: 100vh;*!*/
+/*	background: #222;*/
+/*}*/
+
+/* style.css */
+
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    line-height: 1.2; /* 减少全局行间距 */
+}
+
+.date, .day {
+    font-size: 2.5em;
+}
+
+.time {
+    font-size: 9em;
+    margin: 10px auto;
+}
+
+.buttons {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: black;
+    color: gray;
+    border: 1px solid gray;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #333333;
+}
+
+#flipclock-container {
+    display: block;
+}
+
+#digital-clock-container {
+    display: none;
+}
+
+.clock
+{
+	width: auto;
+	zoom: 2;
+}
+.flip-clock-dot
+{
+	background: #ccc;
+	/*background: #ffffff;*/
+}
+.flip-clock-meridium a
+{
+    color: #ccc;
+    /*color: #ffffff;*/
+}
+h1 {
+    font-family: "Microsoft YaHei";
+    /*font-family: "Helvetica Neue", Helvetica, sans-serif;*/
+    /*font-family: sans-serif, Times, TimesNR, 'New Century Schoolbook', Georgia, 'New York', serif;*/
+    color: whitesmoke;
+	text-align:center;
+	font-size: 1.2em;
+	line-height: 0.8;
+
+	/*zoom: 1.5;*/
+}
+#box
+{
+	display: table;
+}
+#content
+{
+	/*color: #fff;*/
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+}

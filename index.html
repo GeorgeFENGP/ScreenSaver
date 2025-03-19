@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日期和时间显示</title>
+    <link rel="stylesheet" href="./css/flipclock.css">
+    <link rel="stylesheet" href="./css/style.css"> <!-- 引入外部CSS文件 -->
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/flipclock.js"></script>
+</head>
+<body>
+    <div id="flipclock-container">
+        <div class="clock" id="flipclock"></div>
+        <div class="date" id='ShowDate'>
+            <h1 id='ShowDateDate'></h1><br>
+            <h1 id='ShowDateWeek'></h1>
+        </div>
+    </div>
+
+    <div id="digital-clock-container">
+        <div class="date" id="date"></div>
+        <div class="time" id="time"></div>
+        <div class="day" id="day"></div>
+    </div>
+
+    <div class="buttons">
+        <button onclick="document.documentElement.requestFullscreen()">全屏</button>
+        <button onclick="window.close()">关闭</button>
+        <button id="toggle-btn">切换</button>
+    </div>
+
+    <script type="text/javascript">
+        // Mobile zoom
+        if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+            document.getElementById('flipclock').setAttribute("style","zoom:1.5;");
+            document.getElementById('ShowDate').setAttribute("style","zoom:1.5;");
+        }
+
+        var clock;
+        var isFlipClock = true; // 用于判断当前是否为翻页时钟模式
+
+        $(document).ready(function() {
+            clock = $('.clock').FlipClock({
+                clockFace: 'TwentyFourHourClock',
+                showSeconds: false
+            });
+        });
+
+        var d = new Date();
+        document.getElementById('ShowDateDate').innerHTML = d.getFullYear() + "年" +(d.getMonth() + 1) + "月" + d.getDate() + "日";
+        document.getElementById('ShowDateWeek').innerHTML = '星期' + '日一二三四五六'.charAt(d.getDay());
+
+        // 切换按钮功能
+        document.getElementById('toggle-btn').addEventListener('click', function() {
+            if (isFlipClock) {
+                // 切换为数字时钟 + 日期 + 星期
+                document.getElementById('flipclock-container').style.display = 'none'; // 隐藏翻页时钟
+                document.getElementById('digital-clock-container').style.display = 'block'; // 显示数字时钟
+            } else {
+                // 切换回翻页时钟
+                document.getElementById('flipclock-container').style.display = 'block'; // 显示翻页时钟
+                document.getElementById('digital-clock-container').style.display = 'none'; // 隐藏数字时钟
+            }
+            isFlipClock = !isFlipClock; // 切换状态
+        });
+
+        // 数字时钟更新
+        function updateDateTime() {
+            const now = new Date();
+            const date = now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日"; // 修改日期格式
+            const time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            const dayOfWeek = days[now.getDay()];
+
+            document.getElementById('date').textContent = date;
+            document.getElementById('time').textContent = time;
+            document.getElementById('day').textContent = dayOfWeek;
+        }
+
+        setInterval(updateDateTime, 1000); // 每秒更新时间
+        updateDateTime(); // 初始化显示
+    </script>
+</body>
+</html>
