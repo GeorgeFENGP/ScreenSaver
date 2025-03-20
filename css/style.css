@@ -19,6 +19,10 @@ body {
     font-size: 2.5em;
 }
 
+.h1{
+    font-size:2em;
+}
+
 .time {
     font-size: 9em;
     margin: 10px auto;
