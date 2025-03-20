@@ -1,3 +1,18 @@
+*
+{
+	margin: 0;
+	padding: 0;
+}
+/*body*/
+/*{*/
+/*	display: flex;*/
+/*	text-align:center;*/
+/*	justify-content: center;*/
+/*	align-items: center;*/
+/*	!*min-height: 100vh;*!*/
+/*	background: #222;*/
+/*}*/
+
 /* style.css */
 
 body {
@@ -53,4 +68,42 @@ button:hover {
 
 #digital-clock-container {
     display: none;
+}
+
+.clock
+{
+	width: auto;
+	zoom: 2;
+}
+.flip-clock-dot
+{
+	background: #ccc;
+	/*background: #ffffff;*/
+}
+.flip-clock-meridium a
+{
+    color: #ccc;
+    /*color: #ffffff;*/
+}
+h1 {
+    font-family: "Microsoft YaHei";
+    /*font-family: "Helvetica Neue", Helvetica, sans-serif;*/
+    /*font-family: sans-serif, Times, TimesNR, 'New Century Schoolbook', Georgia, 'New York', serif;*/
+    color: whitesmoke;
+	text-align:center;
+	font-size: 1.2em;
+	line-height: 0.8;
+
+	/*zoom: 1.5;*/
+}
+#box
+{
+	display: table;
+}
+#content
+{
+	/*color: #fff;*/
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
 }
