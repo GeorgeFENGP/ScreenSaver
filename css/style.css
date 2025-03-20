@@ -19,9 +19,6 @@ body {
     font-size: 2.5em;
 }
 
-.h1{
-    font-size:2em;
-}
 
 .time {
     font-size: 9em;
@@ -52,9 +49,7 @@ button:hover {
 }
 
 #flipclock-container {
-    display: block;
-    width: 67%; /* 设置宽度为页面宽度的67% */
-    margin: auto; /* 居中显示 */
+    display: none;
 }
 
 #digital-clock-container {
